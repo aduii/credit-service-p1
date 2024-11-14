@@ -1,0 +1,214 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v1.0.0
+servers:
+  - url: http://localhost:62889
+    description: Localhost server
+paths:
+  /api/v1/credit/{id}:
+    get:
+      tags:
+        - credit-controller
+      operationId: findByCreditId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Credit'
+    put:
+      tags:
+        - credit-controller
+      operationId: updateCredit
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credit'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Credit'
+    delete:
+      tags:
+        - credit-controller
+      operationId: deleteCredit
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /api/v1/credit-payment/{id}:
+    get:
+      tags:
+        - credit-payment-controller
+      operationId: findByCreditPaymentId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CreditPayment'
+    put:
+      tags:
+        - credit-payment-controller
+      operationId: updateCreditPayment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditPayment'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CreditPayment'
+    delete:
+      tags:
+        - credit-payment-controller
+      operationId: deleteCreditPayment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+  /api/v1/credit:
+    get:
+      tags:
+        - credit-controller
+      operationId: getAllCredits
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Credit'
+    post:
+      tags:
+        - credit-controller
+      operationId: createCredit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Credit'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Credit'
+  /api/v1/credit-payment:
+    get:
+      tags:
+        - credit-payment-controller
+      operationId: getAllCreditPayments
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CreditPayment'
+    post:
+      tags:
+        - credit-payment-controller
+      operationId: createCreditPayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreditPayment'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/CreditPayment'
+components:
+  schemas:
+    Credit:
+      type: object
+      properties:
+        id:
+          type: string
+        customerId:
+          type: string
+        amount:
+          type: number
+          format: double
+        balance:
+          type: number
+          format: double
+        type:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        dueDate:
+          type: string
+          format: date-time
+    CreditPayment:
+      type: object
+      properties:
+        id:
+          type: string
+        creditId:
+          type: string
+        paymentAmount:
+          type: number
+          format: double
+        paymentDate:
+          type: string
+          format: date-time
